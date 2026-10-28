@@ -61,7 +61,8 @@ def check_quality(raw: dict[str, Any]) -> QualityResult:
         # Deduplicate the list, then check each row for empty required fields and bad dates.
         rows, disputed = _dedupe(records.get(list_name, []), thing, items)
 
-        # Check each row for empty required fields and bad dates. Skip fields already reported as Conflict.
+        # Check each row for empty required fields and bad dates.
+        # Skip fields already reported as Conflict.
         for i, row in enumerate(rows):
             ref = row.get("id") or f"{list_name}[{i}]"
             _check_row(row, thing, ref, required, items, skip=disputed.get(ref, set()))
@@ -72,7 +73,8 @@ def check_quality(raw: dict[str, Any]) -> QualityResult:
     if cert:
         _check_row(cert, "certificate", cert.get("number") or "certificate", _CERT_REQUIRED, items)
 
-    # Check that each link field points to a known record in the target list. If not, report it as Missing and blank the field.
+    # Check that each link field points to a known record in the target list.
+    # If not, report it as Missing and blank the field.
     _check_links(records, items)
 
     return QualityResult(records=records, items=tuple(items))
@@ -134,6 +136,7 @@ def _dedupe(
                 label=Label.CONFLICT,
                 text=f"{thing} {rid}: duplicate records disagree on {', '.join(sorted(fields))}",
                 why="data quality check on load; none of the copies is picked",
+                rule="data_quality",
                 sources=tuple(
                     Source(kind=SourceKind.RECORD, ref=f"{rid} (copy {n})")
                     for n in range(1, len(group) + 1)
@@ -148,7 +151,8 @@ def _dedupe(
 def _check_links(records: dict[str, Any], items: list[Item]) -> None:
     known = {name: {row.get("id") for row in records[name]} for name in _LINKS.values()}
 
-    # Check that each link field points to a known record in the target list. If not, report it as Missing and blank the field.
+    # Check that each link field points to a known record in the target list.
+    # If not, report it as Missing and blank the field.
     for list_name, (thing, _) in _REQUIRED.items():
         for row in records[list_name]:
             for field, target in _LINKS.items():
@@ -166,6 +170,7 @@ def _missing(thing: str, ref: str, field: str, problem: str) -> Item:
         label=Label.MISSING,
         text=f"{thing} {ref}: {field} {problem}",
         why=_WHY,
+        rule="data_quality",
         sources=(Source(kind=SourceKind.RECORD, ref=ref),),
     )
 

@@ -29,10 +29,11 @@ class Label(StrEnum):
 
 
 class SourceKind(StrEnum):
-    RECORD = "record"   # structured data from the auditee's system, e.g. a database record
-    DOCUMENT = "document"   # a document (PDF, Word, etc.) that is read and quoted (unstructured)
-    SCAN = "scan"   # a scanned document (image) that is read and quoted (unstructured)
-    EXTERNAL = "external"   # a link to an external source (web page, API, etc.) that is checked and quoted
+    RECORD = "record"  # structured data from the auditee's system, e.g. a database record
+    DOCUMENT = "document"  # a document (PDF, Word, etc.) that is read and quoted (unstructured)
+    SCAN = "scan"  # a scanned document (image) that is read and quoted (unstructured)
+    # a link to an external source (web page, API, etc.) that is checked and quoted
+    EXTERNAL = "external"
 
 
 class Source(BaseModel):
@@ -102,6 +103,7 @@ class Item(BaseModel):
     text: str
     why: str
     sources: tuple[Source, ...] = ()
+    rule: str | None = None  # which rule or check made it, e.g. "overdue_ca"; used for ranking
 
     @model_validator(mode="after")
     def _sources_match_label(self) -> Item:

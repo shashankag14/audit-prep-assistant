@@ -63,4 +63,4 @@ def test_profile_has_standing_questions_for_surveillance():
     surveillance = load_scheme_profile("iso9001").audit_types["surveillance"]
 
     assert len(surveillance.standing_questions) >= 5
-    assert "internal audit report" in surveillance.expected_documents
+    assert "internal audit report" in {d.type for d in surveillance.expected_documents}

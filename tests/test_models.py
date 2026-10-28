@@ -7,22 +7,43 @@ from audit_prep.models import Claim, Item, Label, Source, SourceKind
 
 RECORD = Source(kind=SourceKind.RECORD, ref="CA-12")
 DOC = Source(kind=SourceKind.DOCUMENT, ref="evidence.pdf", page=2, quote="CA-12 closed 14 Mar")
-REGISTRY = Source(kind=SourceKind.EXTERNAL, ref="https://registry.example/C-881",
-                  checked_on=date(2026, 10, 28))
+REGISTRY = Source(
+    kind=SourceKind.EXTERNAL, ref="https://registry.example/C-881", checked_on=date(2026, 10, 28)
+)
 
 
 def test_one_item_per_label():
     items = [
-        Item(label=Label.FACT, text="CA-12 open, 41 days overdue", why="open CA past due date",
-             sources=(RECORD,)),
-        Item(label=Label.EXTRACTED, text="Supplier evaluation postponed", why="matches open CA",
-             sources=(DOC,)),
-        Item(label=Label.CHECK_SOURCE, text="Evaluation done", why="quote may be about 2023",
-             sources=(DOC,)),
-        Item(label=Label.SUGGESTION, text="Sample purchasing records", why="repeat finding",
-             sources=(RECORD, DOC)),
-        Item(label=Label.CONFLICT, text="CA-12 status differs", why="document disagrees with record",
-             sources=(RECORD, DOC)),
+        Item(
+            label=Label.FACT,
+            text="CA-12 open, 41 days overdue",
+            why="open CA past due date",
+            sources=(RECORD,),
+        ),
+        Item(
+            label=Label.EXTRACTED,
+            text="Supplier evaluation postponed",
+            why="matches open CA",
+            sources=(DOC,),
+        ),
+        Item(
+            label=Label.CHECK_SOURCE,
+            text="Evaluation done",
+            why="quote may be about 2023",
+            sources=(DOC,),
+        ),
+        Item(
+            label=Label.SUGGESTION,
+            text="Sample purchasing records",
+            why="repeat finding",
+            sources=(RECORD, DOC),
+        ),
+        Item(
+            label=Label.CONFLICT,
+            text="CA-12 status differs",
+            why="document disagrees with record",
+            sources=(RECORD, DOC),
+        ),
         Item(label=Label.MISSING, text="Internal audit report 2026", why="not submitted"),
     ]
     assert {item.label for item in items} == set(Label)

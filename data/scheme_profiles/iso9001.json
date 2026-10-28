@@ -62,9 +62,9 @@
         }
       ],
       "expected_documents": [
-        "management review minutes",
-        "internal audit report",
-        "corrective action evidence"
+        { "type": "management review minutes" },
+        { "type": "internal audit report" },
+        { "type": "corrective action evidence", "only_if": "corrective_actions" }
       ]
     }
   }

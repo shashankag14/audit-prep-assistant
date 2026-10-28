@@ -44,12 +44,22 @@ class StandingQuestion(BaseModel):
     terms: tuple[str, ...]  # search terms for the keyword index
 
 
+class ExpectedDocument(BaseModel):
+    """A document the client should send before this audit type."""
+
+    model_config = ConfigDict(frozen=True)
+
+    type: str
+    only_if: str | None = None  # record list that must be non-empty, e.g. "corrective_actions"
+
+
 class AuditTypeProfile(BaseModel):
     """Scheme-specific config for one audit type: standing questions and expected documents."""
+
     model_config = ConfigDict(frozen=True)
 
     standing_questions: tuple[StandingQuestion, ...]
-    expected_documents: tuple[str, ...]
+    expected_documents: tuple[ExpectedDocument, ...]
 
 
 class SchemeProfile(BaseModel):
