@@ -3,9 +3,8 @@
 OCR is faked; the real engine is never run in tests.
 """
 
-from pathlib import Path
-
 import pytest
+from fakes import FakeOcr
 
 from audit_prep.documents import (
     KeywordIndex,
@@ -17,16 +16,6 @@ from audit_prep.documents import (
 )
 from audit_prep.loader import load_audit
 from audit_prep.models import Label, SourceKind
-
-
-class FakeOcr:
-    """Returns fixed lines, like RapidOCR would for the certificate scan."""
-
-    def __init__(self, lines: list[OcrLine]) -> None:
-        self.lines = lines
-
-    def read(self, image: Path) -> list[OcrLine]:
-        return self.lines
 
 
 CERT_LINES = [
