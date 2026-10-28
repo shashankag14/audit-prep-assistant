@@ -98,10 +98,10 @@ flowchart LR
 | --- | --- | --- | --- |
 | (1) **Rules** | ❌ | Answers the questions from the records: overdue CAs, repeat findings, expiries, scope changes, missing documents | **Fact** / **Missing** |
 | (2) **Read documents** | ✅ | Searches one client's documents for evidence on the same questions (RAG); returns claims with citations. Also reads scans (OCR) | candidate claim |
-| (3) **Checks** | ❌ | **Citation check:** is the cited text really in the source? If not, hide it.<br/>**Record check:** does the claim agree with the records? If not, flag it. | **Extracted** / **Conflict** / **Missing** |
+| (3) **Checks** | ❌ | **Citation check:** is the cited text really in the source? If yes, **Extracted**. If not, show it as **Missing**.<br/>**Cross-source check:** does the claim agree with the records or other soruces? If not, **Conflict**.| **Extracted** /  **Conflict** / **Missing** |
 | (4) **Rank & show** | ❌ | Orders items with a fixed scoring rule (conflicts first, then overdue CAs, …) and adds rule-based suggestions | keeps label + citation; **Suggestion** |
 
-- **Why two checks?** The citation check proves *the document says it*; the record check proves *it matches the CB's records*.
+
 - **Never AI:** like data access control (which client, which certificaiton body).
 
 | Choice | Preferred approach | Not preferred |
