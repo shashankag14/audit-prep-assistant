@@ -23,7 +23,7 @@ class Label(StrEnum):
     FACT = "Fact"  # computed by a rule from records
     EXTRACTED = "Extracted"  # read from a document or external source, quote found
     CHECK_SOURCE = "Check source"  # quote is real, but may not support the claim
-    SUGGESTION = "Suggestion"  # a hint built by a rule from other items
+    SUGGESTION = "Suggestion"  # a hint built by a rule from other items (not produced yet)
     CONFLICT = "Conflict"  # two or more sources disagree; none is picked
     MISSING = "Missing"  # absent, unreadable, or could not be verified
 

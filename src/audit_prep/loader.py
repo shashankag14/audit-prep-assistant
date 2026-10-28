@@ -75,7 +75,6 @@ class SchemeProfile(BaseModel):
     fields: dict[str, tuple[str, ...]]  # claim thing -> allowed fields
     audit_types: dict[str, AuditTypeProfile]
 
-
 class AuditData(BaseModel):
     """Everything later steps may see for one audit. Nothing else is loaded."""
 
