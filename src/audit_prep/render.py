@@ -49,14 +49,13 @@ def render_html(brief: Brief, client_dir: Path) -> str:
     audit = brief.audit
     header = (
         f"<h1>Audit prep brief: {escape(brief.client_name)}</h1>"
-        f"<p>{escape(brief.scheme)} · {escape(str(audit.get('type')))} audit "
-        f"{escape(str(audit.get('id')))} · {escape(str(audit.get('date')))}</p>"
-        f"<p>Certification body: {escape(brief.tenant_id)}</p>"
+        f"<p>Certification Body: {escape(brief.scheme)} · Audit type: {escape(str(audit.get('type')))} audit "
+        f"<p>Audit ID: {escape(str(audit.get('id')))} · Audit Date: {escape(str(audit.get('date')))}</p>"
+        f"<p>Tenant ID: {escape(brief.tenant_id)}</p>"
     )
     sections = "".join(_section(s, client_dir) for s in brief.sections)
     footer = (
-        f"<footer>audit-prep {escape(__version__)}. Labels say what each item rests on; "
-        "there are no confidence scores. Conflicts show every source and pick none.</footer>"
+        f"<footer>audit-prep {escape(__version__)}.</footer>"
     )
     return (
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'

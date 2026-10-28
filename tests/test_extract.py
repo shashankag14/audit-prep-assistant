@@ -144,3 +144,13 @@ def test_same_claim_from_two_questions_is_kept_once():
     claims, _, _ = _extract([CA12, again], _answer(CA12_CLOSED), _answer(CA12_CLOSED))
 
     assert len(claims) == 1
+
+
+def test_prompt_example_is_a_valid_answer():
+    from audit_prep.extract import _EXAMPLE, _LlmAnswer, _system_prompt
+
+    data, _ = _setup()
+    answer = _LlmAnswer.model_validate_json(_EXAMPLE.split("Answer:\n", 1)[1])
+
+    assert _EXAMPLE in _system_prompt(data.profile)
+    assert {c.doc_id for c in answer.claims} == {"DOC-EXAMPLE"}  # made up, never a real doc
