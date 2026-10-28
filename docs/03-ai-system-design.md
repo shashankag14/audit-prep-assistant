@@ -15,26 +15,33 @@
 flowchart LR
     subgraph IN["Inputs (one client, one audit)"]
         REC[("Records<br/>audits, findings, CAs,<br/>certificates, sites")]
+        QL["Question list<br/>per audit type"]
         DOC[["Documents & scans"]]
         EXT[/"External sources<br/>e.g. certificate registry"/]
     end
-    REC --> RULES["1. Rules<br/>no AI"]
-    DOC --> OCR["OCR<br/>(scans only)"]
-    OCR --> IDX["Search index<br/>one per client"]
-    DOC --> IDX
-    RULES -->|"questions + record ids"| READ["2. Read documents<br/>LLM extraction"]
-    IDX --> READ
-    READ -->|"claims + quote + page"| CHK["3. Checks<br/>citation · cross-source · verifier"]
+
+    REC -->|"records (to compute 'Facts')"| RULES["Step 1: Rules<br/>no AI"]
+    DOC -->|"image pages"| OCR["Step 2a: OCR<br/>traditional ML"]
+    DOC -->|"text pages"| IDX["Step 2b: Search index<br/>one per client"]
+    OCR -->|"text + word confidence"| IDX
+
+    RULES -->|"what to look for<br/>e.g. CA-12"| READ["Step 3: Read unstructured documents<br/>eg. RAG"]
+    QL -->|"questions to use<br/>e.g. changes since last visit"| READ
+    IDX -->|"matching passages"| READ
+
+    READ -->|"claims + quote + page"| CHK["Step 4: Checks<br/>citation · cross-source · verifier"]
     EXT -->|"claims + link + date"| CHK
-    REC --> CHK
-    RULES -->|"Fact / Missing"| RANK["4. Rank & render<br/>no AI"]
+    REC -->|"record claims (to compare)"| CHK
+
+    RULES -->|"Fact / Missing"| RANK["Step 5: Rank, suggest & render<br/>no AI"]
     CHK -->|"Extracted / Check source /<br/>Conflict / Missing"| RANK
-    RANK --> BRIEF["Brief"]
+
+    RANK -->|"ordered items<br/>in templates"| BRIEF["Brief"]
     BRIEF --> AUD((Auditor))
     AUD -->|"Dismiss / Mark wrong"| LOG[("Feedback log<br/>= eval cases")]
 ```
 
-Every claim, whatever its source, has the same shape: **thing · id · field · value · source**. See ``Key Decisions`` (Point #2) section for more details.
+Every claim, whatever its source, has the same shape: **thing · id · field · value · source**, when fed to Step 4 in the architecture to compare the data cross soruces. See ``Key Decisions`` (Point #2) section for more details.
 
 ---
 
@@ -51,7 +58,7 @@ Every claim, whatever its source, has the same shape: **thing · id · field · 
 | Citation check | Is the quote really on the cited page? | Code (fuzzy string match) | Catches quotes 'invented' by AI. On failure → attached to **'Missing'** label in the brief |
 | Cross-source check | Groups claims about the same thing and field. If values differ → attached to **'Conflict'** label | Code | One generic comparison for any pair: record, document, external |
 | Verifier (optional) | Does the quote actually support the claim? | Small classifier (eg. Jev style) | Catches real but misread quotes. If doubtful (low confidence) → attached to **'Check source'** label |
-| Ranking | Orders items with a fixed scoring rule.| Code | Readable, tunable, the same every run so that the next time auditor opens a new brief, they experience a simialr structured brief (consistency in output structure) |
+| Ranking | Orders items with a fixed scoring rule and adds **'Suggestions'** using fixed rules over the other items| Code | Readable, tunable, the same every run so that the next time auditor opens a new brief, they experience a simialr structured brief (consistency in output structure) |
 | Renderer (eg. HTML page) | Builds the brief from sentence templates, with labels, why lines and source links | Code | Wording can't hallucinate. |
 | Auditor Feedback | Stores **'Dismiss'** / **'Mark wrong'** with reasons | Code | Helps in building an eval set. Not used for training |
 | Chat (not in prototype, but would good to have later) | Answers follow ups from the same index, with the same checks | LLM + same checks | Optional as an add-on to the Audit Brief doc |
@@ -90,7 +97,7 @@ Note: the field names above are fixed. We provide a list of allowed fields which
 
 | Alternatives considered | Why rejected for now |
 | --- | --- |
-| One LLM call that writes the whole brief | Auditors might not rely on a full summary generated without any clear labels or the soruce where it comers from. Also, its difficult to verify which sentence came from where and hallucinations look like facts. We can keep a short summary at the end of the brief based on the whole brief tempalte shown in ![02-product-experience.md](02-product-experience.md) |
+| One LLM call that writes the whole brief | Auditors might not rely on a full summary generated without any clear labels or the soruce where it comers from. Also, its difficult to verify which sentence came from where and hallucinations look like facts. |
 | Agent that decides what to look for | Coverage becomes unpredictable, hard to evaluate and can silently skip hard questions. |
 | Text-to-SQL on SQL records | Can be wrong as it needs AI (MCP servers also exist which makes the performance better but still not completely reliable). If we have an audit plan on what things to check on for the meeting prep, the questions are fixed, so plain queries are enough |
 | Treating records as the truth | Records can be wrong too. So in case of any conflict with any other source document, AI shall not pick a side. |
