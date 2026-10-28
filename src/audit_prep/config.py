@@ -8,6 +8,10 @@ DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 # OCR line confidence below this: the value on that line is treated as unreadable.
 MIN_OCR_CONFIDENCE = 0.8
 
+# Citation check: a quote counts as found if some stretch of the page matches it this
+# closely (0..1). Allows small OCR or spacing slips, not a different sentence.
+CITATION_MIN_RATIO = 0.9
+
 # Local LLM: GGUF files run with llama-cpp-python. Downloaded from Hugging Face on
 # first use (no account, no key) into the Hugging Face cache. Pick with --model.
 MODELS = {

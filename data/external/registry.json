@@ -1,0 +1,28 @@
+{
+  "name": "Public certificate registry (mock)",
+  "url": "https://registry.example.org/certificates",
+  "checked_on": "2026-10-20",
+  "certificates": [
+    {
+      "number": "QMS-48213",
+      "holder": "Brightline Components Ltd",
+      "scheme": "ISO 9001",
+      "status": "suspended",
+      "expiry_date": "2027-12-01"
+    },
+    {
+      "number": "QMS-51907",
+      "holder": "Kestrel Labels GmbH",
+      "scheme": "ISO 9001",
+      "status": "valid",
+      "expiry_date": "2029-06-14"
+    },
+    {
+      "number": "QMS-30077",
+      "holder": "Harbor Foods AB",
+      "scheme": "ISO 9001",
+      "status": "valid",
+      "expiry_date": "2027-08-29"
+    }
+  ]
+}
