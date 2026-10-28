@@ -105,6 +105,11 @@
       "id": "DOC-CA12-EVID",
       "type": "corrective action evidence",
       "received_on": "2026-10-06"
+    },
+    {
+      "id": "SCAN-CERT-2024",
+      "type": "certificate scan",
+      "received_on": "2026-10-06"
     }
   ]
 }

@@ -1,0 +1,14 @@
+2. Results of the last external audit (AUD-2025-S1)
+
+Two minor nonconformities were raised. F-2025-02 (clause 8.4) concerns supplier
+evaluation. F-2025-04 (clause 9.2) concerns internal audit coverage of Site 2.
+
+Corrective action CA-12 (supplier re-evaluation) will be closed by March 2026,
+once the last three supplier questionnaires are returned.
+
+3. Supplier performance
+
+On-time delivery from approved suppliers was 94 percent in 2025.
+The annual supplier evaluation has been postponed to Q3 2026 because the
+purchasing team is busy with the ERP migration.
+L. Brandt to confirm the new date at the next review.

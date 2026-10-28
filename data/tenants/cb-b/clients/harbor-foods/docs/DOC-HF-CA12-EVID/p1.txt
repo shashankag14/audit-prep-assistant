@@ -1,0 +1,8 @@
+Harbor Foods AB
+Corrective Action Evidence
+
+Corrective action: CA-12
+Related finding: HF-F-2025-01 (ISO 9001 clause 8.4)
+
+The overdue supplier evaluation for the packaging supplier was completed.
+CA-12 was closed on 1 December 2025 and verified by the quality manager.

@@ -1,0 +1,10 @@
+Brightline Components Ltd
+Corrective Action Evidence
+
+Corrective action: CA-12
+Related finding: F-2025-02 (ISO 9001 clause 8.4)
+Owner: L. Brandt, Purchasing Lead
+Prepared for: certification body CB-A, surveillance audit 2026
+
+Root cause: the supplier evaluation procedure had no reminder for the annual
+re-evaluation, so three approved suppliers were not evaluated in 2025.
