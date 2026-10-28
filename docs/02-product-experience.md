@@ -148,3 +148,7 @@ The prototype must show each of these.
 | Document contradicts the records | Label: Conflict, Why: (some reason), Source: (some source) |
 | Scan is unreadable | Label: Missing, Why: XYZ Doc unreadable |
 | New client with almost no history | Label: Missing, Why: "Not enough history to assess" |
+| AI misreads a real quote and makes a wrong claim and all checks pass (e.g. verifier is off or misses it) | Label: Extracted, but the exact quote is shown right next to the claim, so the auditor can spot the mismatch. She clicks 'Mark wrong' → item is marked and becomes an eval case
+| A record itself is wrong | Label: Fact, Source: record link. Nothing can catch it unless another soruce contradicts (then its assigned Conflict Label). The auditor can still click 'Mark Wrong'|
+
+The checks reduce mistakes but can't remove them. That's why every item keeps its source next to it, and the brief never shows a claim the auditor can't check herself.
