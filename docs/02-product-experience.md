@@ -38,7 +38,7 @@ This walkthrough explains what the system does vs what the auditor does through 
 ```mermaid
 flowchart LR
     subgraph S["System"]
-        A[Load records and documents<br/>for this audit] --> B[Rules on records</br>i.e. structured data]
+        A[Load records, documents and external source data<br/>for this audit] --> B[Rules on records</br>i.e. structured data]
         A --> C[Read documents and scans</br>i.e. unstructured data]
         C --> D[Citation check<br/>+ Record check]
         B --> E[Rank brief<br/>+ add why lines]
@@ -70,10 +70,10 @@ The flow above is more of a refined version of whats presented in [01-problem-fr
 
 | Label | Meaning | Example |
 | --- | --- | --- |
-| **Fact** | Computed by a rule from records, so its a fact. | X is open, 10 days overdue |
-| **Extracted** | Read from a document, quote found in the source via citation | Mgmt review p.3: "supplier evaluation postponed to Q3" |
+| **Fact** | Computed by a rule from records, so its a fact. (Not based on unstructured data or external data as it could be unreliable) | X is open, 10 days overdue |
+| **Extracted** | Read from a document (unstructured data) and its quote can be found in the source via citation. Or data extracted from external sources. | Mgmt review p.3: "supplier evaluation postponed to Q3" |
 | **Check source** | Quote is real, but a second check doubts that it supports the claim | Evidence p.4 quoted as "evaluation done", but the sentence is about 2023 |
-| **Suggestion** | A hint built from several items above. Not a fact | Consider sampling purchasing records (8.4) |
+| **Suggestion** | A hint built from items above. Not a fact. | Consider sampling purchasing records (8.4) |
 | **Conflict** | Two sources disagree. Both are shown but none picked | Records: X is open, Evidence: "X was closed in 2025" |
 | **Missing** | Required data is absent or unreadable | Certificate PDF was unreadable |
 
@@ -106,7 +106,8 @@ flowchart LR
             direction TB
             N1["🟦 Fact: CA-12 open, 41 days overdue (8.4)<br/>· why: open CA past due date <br/>· source: record CA-12"]
             N2["🟥 Conflict: Evidence p.2 says CA-12 closed 14 Mar, records say open<br/>· why: document disagrees with record <br/>· Source: p.2 in evidence doc + record"]
-            N3["🟦 Fact: 8.4 finding repeated in 2024 and 2025<br/>· why: repeat-finding rule <br/>· source: audit records"]
+            N3["🟥 Conflict: External website says Certificate not generated, internal record says Audit certificate received<br/>· why: document disagrees with record <br/>· Source: record + website link"]
+            N4["🟦 Fact: 8.4 finding repeated in 2024 and 2025<br/>· why: repeat-finding rule <br/>· source: audit records"]
         end
         subgraph WL["Worth a look"]
             direction TB
@@ -133,6 +134,8 @@ flowchart LR
     end
     BRIEF -.-> CHAT
 ```
+
+In the whole product experience, whenever something is AI generated show some visible marker mentioned 'AI Generated'.
 ---
 
 ## When the AI is wrong

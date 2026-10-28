@@ -62,6 +62,7 @@ The framing below holds for all of them. The choice of where to start is in [sec
 | Where does client info **live** (only on Intact platform as structured data, or even on attachments, emails, PDFs which the client could load in the interface additionally)? | Structured vs unstructured data challenge |
 | How different is data **across schemes**? | How far one design can stretch |
 | How would the auditors prefer to interact with the assistant? | To decide if the interface needs to generate a one shot prep doc, or needs to be a chatbot or even a voice agent (or a mix of these)? |
+| Which **external sources/APIs** do auditors check and how much do they **trust them**? | Helps in deciding how to show the data extracted from such sources. Is it reliable enough? |
 
 ---
 
@@ -90,7 +91,7 @@ flowchart LR
     L1 -->|"Fact / Missing"| L4["(4) Rank & show<br/>no AI"]
     L3 -->|"Extracted / Conflict / Missing"| L4
     L4 --> B["Audit prep brief"]
-    style L2 fill:#dbeafe,stroke:#1d4ed8,color:#000
+    EXT[/"External sources"/] -.-> L3
 ```
 
 | Layer | AI? | What it does | Label |
@@ -135,6 +136,7 @@ flowchart TB
 | A client with rich history and one with almost none | Chat interface |
 | A document that contradicts the records | Multiple schemes |
 | An evaluation set with planted issues | Training any model |
+| A fake external source | Live external APIs which auditors use |
 
 **Why this slice:**
 - **Rules alone are useful on day one** and give the AI a baseline to beat.
