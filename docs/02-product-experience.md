@@ -136,6 +136,18 @@ flowchart LR
 ```
 
 In the whole product experience, whenever something is AI generated show some visible marker mentioned 'AI Generated'.
+
+
+### Which section an item goes to
+| Section	| Which label goes here	| Why| 
+| --- | --- | --- | 
+| Needs attention	| Conflicts, Facts	| Critical as they could change the audit plan and the auditor needs to act on it | 
+| Worth a look	| Extracted, Check source, Suggestions	| Useful context, but not proven or not urgent| 
+| Not sampled in last 2 audits | (Clauses in scope but not covered recently i.e. clauses in this audit’s scope − clauses covered in the last 2 audits = not sampled)	| so the auditor doesn’t only follow history | 
+| What I could not check | Missing	| Gaps are never mixed with findings | 
+
+Fixed rules, no AI, so the same data always gives the same order.
+
 ---
 
 ## When the AI is wrong
