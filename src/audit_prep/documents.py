@@ -116,12 +116,13 @@ def low_confidence_lines(
     Matching ignores case and spaces, because OCR often drops spaces
     ("Certificatenumber:QMS-48213").
     """
+    return [line for line in lines_holding(page, quote) if line.confidence < min_confidence]
+
+
+def lines_holding(page: Page, quote: str) -> list[OcrLine]:
+    """OCR lines that contain `quote`, ignoring case and spaces. Empty for text pages."""
     target = _for_ocr_match(quote)
-    return [
-        line
-        for line in page.lines
-        if line.confidence < min_confidence and target and target in _for_ocr_match(line.text)
-    ]
+    return [line for line in page.lines if target and target in _for_ocr_match(line.text)]
 
 
 class Hit(BaseModel):
@@ -143,11 +144,15 @@ class KeywordIndex:
         self._pages = [(page, _for_search(page.text)) for page in pages]
 
     def search(self, terms: list[str], top_k: int = 3) -> list[Hit]:
+        """Return the pages that contain one or more of the search terms. 
+        Later replaced by a proper index (eg. HNSW + BM25), but this is enough for now."""
+
         hits = []
         for page, text in self._pages:
             matched = tuple(t for t in terms if re.search(rf"\b{re.escape(t.lower())}\b", text))
             if matched:
                 hits.append(Hit(page=page, matched=matched))
+
         # Fixed order: most terms first, then document and page, so results repeat exactly.
         hits.sort(key=lambda h: (-len(h.matched), h.page.doc_id, h.page.page))
         return hits[:top_k]
