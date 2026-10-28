@@ -1,0 +1,56 @@
+{
+  "tenant_id": "cb-b",
+  "client": {
+    "id": "harbor-foods",
+    "name": "Harbor Foods AB",
+    "scheme": "iso9001",
+    "sites": ["Packing plant, Gothenburg"]
+  },
+  "audits": [
+    {
+      "id": "HF-AUD-2025-S1",
+      "type": "surveillance",
+      "date": "2025-09-09",
+      "status": "completed",
+      "clauses_sampled": ["5.2", "8.4", "8.5", "9.2", "10.2"]
+    },
+    {
+      "id": "HF-AUD-2026-S2",
+      "type": "surveillance",
+      "date": "2026-11-10",
+      "status": "planned",
+      "scope_clauses": ["4.4", "8.4", "8.5", "9.2", "9.3", "10.2"]
+    }
+  ],
+  "findings": [
+    {
+      "id": "HF-F-2025-01",
+      "audit_id": "HF-AUD-2025-S1",
+      "clause": "8.4",
+      "grade": "minor",
+      "text": "Supplier evaluation overdue for packaging supplier."
+    }
+  ],
+  "corrective_actions": [
+    {
+      "id": "CA-12",
+      "finding_id": "HF-F-2025-01",
+      "status": "closed",
+      "due_date": "2025-12-31",
+      "closed_on": "2025-12-01"
+    }
+  ],
+  "certificate": {
+    "number": "QMS-30077",
+    "status": "valid",
+    "issued_on": "2024-08-30",
+    "expiry_date": "2027-08-29"
+  },
+  "submitted_documents": [
+    {
+      "id": "DOC-HF-CA12-EVID",
+      "type": "corrective action evidence",
+      "received_on": "2026-10-15"
+    }
+  ]
+}

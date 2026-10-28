@@ -1,0 +1,71 @@
+{
+  "id": "iso9001",
+  "scheme": "ISO 9001",
+  "version": "2015",
+  "clauses": {
+    "4.4": "Quality management system and its processes",
+    "5.2": "Quality policy",
+    "6.1": "Actions to address risks and opportunities",
+    "7.1.5": "Monitoring and measuring resources",
+    "7.2": "Competence",
+    "7.5": "Documented information",
+    "8.4": "Control of externally provided processes, products and services",
+    "8.5": "Production and service provision",
+    "8.7": "Control of nonconforming outputs",
+    "9.1": "Monitoring, measurement, analysis and evaluation",
+    "9.2": "Internal audit",
+    "9.3": "Management review",
+    "10.2": "Nonconformity and corrective action"
+  },
+  "terms": {
+    "corrective action": ["CA", "CAPA", "CAR", "corrective action request"],
+    "nonconformity": ["NC", "finding", "nonconformance"],
+    "supplier evaluation": ["supplier assessment", "vendor evaluation", "approved supplier list"],
+    "management review": ["management review meeting", "MRM"],
+    "internal audit": ["internal audit report", "IA report"],
+    "calibration": ["monitoring and measuring equipment", "MME"]
+  },
+  "fields": {
+    "CA": ["status", "due_date", "closed_on"],
+    "finding": ["clause", "grade", "status"],
+    "certificate": ["number", "status", "expiry_date"],
+    "supplier_evaluation": ["status", "due_date"],
+    "document": ["status", "received_on"]
+  },
+  "audit_types": {
+    "surveillance": {
+      "standing_questions": [
+        {
+          "id": "fixed",
+          "text": "Were the problems from the last audit fixed?",
+          "terms": ["corrective action", "closed", "verified", "effective"]
+        },
+        {
+          "id": "repeat",
+          "text": "Is anything failing again?",
+          "terms": ["again", "recurring", "repeat", "nonconformity"]
+        },
+        {
+          "id": "changes",
+          "text": "What changed since the last visit (sites, scope, key people, processes)?",
+          "terms": ["change", "new site", "moved", "appointed", "reorganisation"]
+        },
+        {
+          "id": "expiring",
+          "text": "Is anything expiring or postponed?",
+          "terms": ["expiry", "expires", "valid until", "postponed", "deferred"]
+        },
+        {
+          "id": "missing",
+          "text": "What is missing?",
+          "terms": ["not available", "not submitted", "pending", "outstanding"]
+        }
+      ],
+      "expected_documents": [
+        "management review minutes",
+        "internal audit report",
+        "corrective action evidence"
+      ]
+    }
+  }
+}

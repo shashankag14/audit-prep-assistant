@@ -1,0 +1,40 @@
+{
+  "tenant_id": "cb-a",
+  "client": {
+    "id": "thin-history",
+    "name": "Kestrel Labels GmbH",
+    "scheme": "iso9001",
+    "sites": ["Head office and print shop, Hamburg"]
+  },
+  "audits": [
+    {
+      "id": "AUD-2026-C1",
+      "type": "certification",
+      "date": "2026-05-20",
+      "status": "completed",
+      "clauses_sampled": ["4.4", "5.2", "6.1", "7.2", "7.5", "8.4", "8.5", "9.2", "9.3", "10.2"]
+    },
+    {
+      "id": "AUD-2026-S1",
+      "type": "surveillance",
+      "date": "2026-11-24",
+      "status": "planned",
+      "scope_clauses": ["4.4", "5.2", "7.5", "8.4", "8.5", "9.2", "9.3", "10.2"]
+    }
+  ],
+  "findings": [],
+  "corrective_actions": [],
+  "certificate": {
+    "number": "QMS-51907",
+    "status": "valid",
+    "issued_on": "2026-06-15",
+    "expiry_date": "2029-06-14"
+  },
+  "submitted_documents": [
+    {
+      "id": "DOC-KL-MR-2026",
+      "type": "management review minutes",
+      "received_on": "2026-10-20"
+    }
+  ]
+}

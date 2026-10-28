@@ -1,0 +1,110 @@
+{
+  "tenant_id": "cb-a",
+  "client": {
+    "id": "rich-history",
+    "name": "Brightline Components Ltd",
+    "scheme": "iso9001",
+    "sites": ["Main plant, Leeds", "Site 2, Bradford"]
+  },
+  "audits": [
+    {
+      "id": "AUD-2024-C1",
+      "type": "certification",
+      "date": "2024-11-05",
+      "status": "completed",
+      "clauses_sampled": ["4.4", "5.2", "6.1", "7.2", "7.5", "8.4", "8.5", "9.2", "9.3", "10.2"]
+    },
+    {
+      "id": "AUD-2025-S1",
+      "type": "surveillance",
+      "date": "2025-11-11",
+      "status": "completed",
+      "clauses_sampled": ["5.2", "7.5", "8.4", "8.5", "9.1", "9.2", "10.2"]
+    },
+    {
+      "id": "AUD-2026-S2",
+      "type": "surveillance",
+      "date": "2026-11-17",
+      "status": "planned",
+      "scope_clauses": ["4.4", "5.2", "6.1", "7.1.5", "7.2", "7.5", "8.4", "8.5", "8.7", "9.1", "9.2", "9.3", "10.2"]
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-2024-03",
+      "audit_id": "AUD-2024-C1",
+      "clause": "8.4",
+      "grade": "minor",
+      "text": "Supplier evaluation records incomplete for two critical suppliers."
+    },
+    {
+      "id": "F-2024-05",
+      "audit_id": "AUD-2024-C1",
+      "clause": "7.5",
+      "grade": "minor",
+      "text": "Obsolete work instruction in use on assembly line 2."
+    },
+    {
+      "id": "F-2025-02",
+      "audit_id": "AUD-2025-S1",
+      "clause": "8.4",
+      "grade": "minor",
+      "text": "Annual supplier evaluation not performed for 3 of 12 approved suppliers."
+    },
+    {
+      "id": "F-2025-04",
+      "audit_id": "AUD-2025-S1",
+      "clause": "9.2",
+      "grade": "minor",
+      "text": "Internal audit programme did not cover production at Site 2."
+    }
+  ],
+  "corrective_actions": [
+    {
+      "id": "CA-09",
+      "finding_id": "F-2024-03",
+      "status": "closed",
+      "due_date": "2025-02-28",
+      "closed_on": "2025-02-20"
+    },
+    {
+      "id": "CA-10",
+      "finding_id": "F-2024-05",
+      "status": "closed",
+      "due_date": "2025-02-28",
+      "closed_on": "2025-03-15"
+    },
+    {
+      "id": "CA-12",
+      "finding_id": "F-2025-02",
+      "status": "open",
+      "due_date": "2026-03-31",
+      "closed_on": null
+    },
+    {
+      "id": "CA-13",
+      "finding_id": "F-2025-04",
+      "status": "open",
+      "due_date": "",
+      "closed_on": null
+    }
+  ],
+  "certificate": {
+    "number": "QMS-48213",
+    "status": "valid",
+    "issued_on": "2024-12-02",
+    "expiry_date": "2027-12-01"
+  },
+  "submitted_documents": [
+    {
+      "id": "DOC-MR-2026",
+      "type": "management review minutes",
+      "received_on": "2026-10-02"
+    },
+    {
+      "id": "DOC-CA12-EVID",
+      "type": "corrective action evidence",
+      "received_on": "2026-10-06"
+    }
+  ]
+}
