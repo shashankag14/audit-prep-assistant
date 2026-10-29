@@ -1,0 +1,212 @@
+{
+  "tool": "audit-prep 0.1.0",
+  "generated_at": "2026-10-29T18:08:20+00:00",
+  "tenant": "cb-a",
+  "client": "rich-history",
+  "audit": "AUD-2026-S2",
+  "model_id": "bartowski/Qwen2.5-7B-Instruct-GGUF/Qwen2.5-7B-Instruct-Q4_K_M.gguf",
+  "prompt_version": "extract-v2",
+  "scheme_profile": "iso9001 2015",
+  "questions_asked": 6,
+  "claims_found": 4,
+  "pages_sent": [
+    "DOC-CA12-EVID p.2",
+    "DOC-MR-2026 p.2",
+    "DOC-CA12-EVID p.1",
+    "DOC-MR-2026 p.3"
+  ],
+  "pages_with_claims": [
+    "DOC-CA12-EVID p.2",
+    "DOC-MR-2026 p.2",
+    "DOC-CA12-EVID p.1"
+  ],
+  "documents_read": true,
+  "external_checked": true,
+  "notices": [],
+  "inputs": {
+    "external/registry.json": "69c3f34d98a9be1237d1c6fe310c346549959ccadc9df9496c6deb13a0f9fdf1",
+    "scheme_profiles/iso9001.json": "fcef1d4c560b2ac27f45836d4073b31afe9a4551035e93e647d23d24145afd98",
+    "tenants/cb-a/clients/rich-history/docs/DOC-CA12-EVID/p1.txt": "84281d607c73184bb32a5434926e9748868753cde403f85beb408f59540aca29",
+    "tenants/cb-a/clients/rich-history/docs/DOC-CA12-EVID/p2.txt": "fb3c9bfe030c4da77c0363aaeaf10541854c26176a8267c557a39a9b36d920f5",
+    "tenants/cb-a/clients/rich-history/docs/DOC-MR-2026/p1.txt": "fdc8dfe443af9f2f56ce196ec9a61306a011a770dbb812b7fa36987212dd6ffe",
+    "tenants/cb-a/clients/rich-history/docs/DOC-MR-2026/p2.txt": "8c9b7c90e06e10f5510ee7c765a8607809157d4f954c08344b127c616273fb76",
+    "tenants/cb-a/clients/rich-history/docs/DOC-MR-2026/p3.txt": "bedad682451feee77c03fcd9cf0802af304dcaee7114b71c760ff552538859fd",
+    "tenants/cb-a/clients/rich-history/records.json": "6aa3e6b2bd7b85945fd64fa679f15e91034abcd2fbe8aae4a80ce86112cbb974",
+    "tenants/cb-a/clients/rich-history/scans/SCAN-CERT-2024/p1.png": "d9956c52e36527ad9a5d168b64e9db21dce618ec5398a790a6a3b5bff5ca7c94"
+  },
+  "items": [
+    {
+      "section": "Needs attention",
+      "label": "Conflict",
+      "text": "CA-12 status: record says open; DOC-CA12-EVID p.2 says closed",
+      "why": "sources disagree; none is picked",
+      "sources": [
+        {
+          "kind": "record",
+          "ref": "CA-12"
+        },
+        {
+          "kind": "document",
+          "ref": "DOC-CA12-EVID",
+          "page": 2,
+          "quote": "CA-12 was closed on 14 March 2026 after all approved suppliers were re-evaluated."
+        }
+      ],
+      "rule": "cross_source"
+    },
+    {
+      "section": "Needs attention",
+      "label": "Conflict",
+      "text": "QMS-48213 status: record says valid; certificate registry says suspended",
+      "why": "sources disagree; none is picked",
+      "sources": [
+        {
+          "kind": "record",
+          "ref": "QMS-48213"
+        },
+        {
+          "kind": "external",
+          "ref": "https://registry.example.org/certificates/QMS-48213",
+          "checked_on": "2026-10-20",
+          "supplied_by": "certificate registry"
+        }
+      ],
+      "rule": "cross_source"
+    },
+    {
+      "section": "Needs attention",
+      "label": "Fact",
+      "text": "CA-12 open, 231 days overdue (clause 8.4)",
+      "why": "not closed and due date 2026-03-31 is before the audit",
+      "sources": [
+        {
+          "kind": "record",
+          "ref": "CA-12"
+        }
+      ],
+      "rule": "overdue_ca"
+    },
+    {
+      "section": "Needs attention",
+      "label": "Fact",
+      "text": "Clause 8.4 finding repeated in 2024 and 2025",
+      "why": "findings on the same clause in 2 audits",
+      "sources": [
+        {
+          "kind": "record",
+          "ref": "F-2024-03"
+        },
+        {
+          "kind": "record",
+          "ref": "F-2025-02"
+        }
+      ],
+      "rule": "repeat_finding"
+    },
+    {
+      "section": "Worth a look",
+      "label": "Extracted",
+      "text": "F-2025-02 clause: 8.4",
+      "why": "quote found on the cited page; matches the record",
+      "sources": [
+        {
+          "kind": "document",
+          "ref": "DOC-MR-2026",
+          "page": 2,
+          "quote": "F-2025-02 (clause 8.4) concerns supplier evaluation."
+        },
+        {
+          "kind": "document",
+          "ref": "DOC-CA12-EVID",
+          "page": 1,
+          "quote": "Related finding: F-2025-02 (ISO 9001 clause 8.4)"
+        }
+      ],
+      "rule": "extracted"
+    },
+    {
+      "section": "Worth a look",
+      "label": "Extracted",
+      "text": "QMS-48213 expiry date: 2027-12-01",
+      "why": "from certificate registry, checked 2026-10-20; matches the record",
+      "sources": [
+        {
+          "kind": "external",
+          "ref": "https://registry.example.org/certificates/QMS-48213",
+          "checked_on": "2026-10-20",
+          "supplied_by": "certificate registry"
+        }
+      ],
+      "rule": "extracted"
+    },
+    {
+      "section": "Worth a look",
+      "label": "Extracted",
+      "text": "CA-12 closed on: 2026-03-14",
+      "why": "quote found on the cited page",
+      "sources": [
+        {
+          "kind": "document",
+          "ref": "DOC-CA12-EVID",
+          "page": 2,
+          "quote": "CA-12 was closed on 14 March 2026 after all approved suppliers were re-evaluated."
+        }
+      ],
+      "rule": "extracted"
+    },
+    {
+      "section": "Not sampled in last 2 audits",
+      "label": "Fact",
+      "text": "Not sampled in the last 2 audits: 7.1.5 Monitoring and measuring resources, 8.7 Control of nonconforming outputs",
+      "why": "in this audit's scope, not sampled in AUD-2024-C1 or AUD-2025-S1",
+      "sources": [
+        {
+          "kind": "record",
+          "ref": "AUD-2024-C1"
+        },
+        {
+          "kind": "record",
+          "ref": "AUD-2025-S1"
+        }
+      ],
+      "rule": "not_sampled"
+    },
+    {
+      "section": "What I could not check",
+      "label": "Missing",
+      "text": "CA CA-13: due_date is empty",
+      "why": "data quality check on load; rules that need this field are skipped",
+      "sources": [
+        {
+          "kind": "record",
+          "ref": "CA-13"
+        }
+      ],
+      "rule": "data_quality"
+    },
+    {
+      "section": "What I could not check",
+      "label": "Missing",
+      "text": "Internal audit report not submitted",
+      "why": "expected before a surveillance audit (ISO 9001 profile)",
+      "sources": [],
+      "rule": "missing_document"
+    },
+    {
+      "section": "What I could not check",
+      "label": "Missing",
+      "text": "Question 'changes': the model's answer could not be read",
+      "why": "answer was not valid JSON in the expected shape, so nothing from it is used",
+      "sources": [],
+      "rule": "extract_rejected"
+    },
+    {
+      "section": "What I could not check",
+      "label": "Missing",
+      "text": "Question 'expiring': the model's answer could not be read",
+      "why": "answer was not valid JSON in the expected shape, so nothing from it is used",
+      "sources": [],
+      "rule": "extract_rejected"
+    }
+  ]
+}

@@ -72,8 +72,8 @@ The framing below holds for all of them. The choice of where to start is in [sec
 | --- | --- | --- | --- |
 | 1 | **Prep time is the cost to cut**<br/>*Brief: "Auditors spend significant time finding, reading and interpreting information before they can decide what actually deserves their attention."* | Faster prep doesn't necessarily solve the pain point | Measure missed issues and wrong claims, apart from the amount of time that it saves for the auditor |
 | 2 | **Auditors will check what the AI says**<br/>*Brief: "what the system does, what the human does, and how uncertainty is handled"* | It's subjective and at times auditors may become over-reliant on the Audit Prep workflow and therefore may skip checking whether all relevant info is present | Always show "what I could **not** check" (eg: "*Certificate Scanning: unreadable, OCR confidence is low, so the expiry date of certification is unknown*")|
-| 3 | **"I don't know" is always safe**<br/>*Brief: "An AI system that confidently invents something is therefore substantially worse than one that says it doesn't know."* | But too many abstentions could lead to auditors going back to Horizontal AI approach (like ChatGPT)<sup>[[1]](#ref-1)</sup> | Say "I don't know" only with a named reason (no data, quote not in source, unreadable scan). Otherwise show what *is* known and flag the gap, e.g. "CA-12 open in records; evidence data doesn't mention it". |
-| 4 | **One design fits all audits and schemes**<br/>*Brief: "Help an auditor arrive at an audit knowing what deserves their attention and why."* | Auditor types, audit types, terms and versions differ<sup>[[2]](#ref-2)</sup>; some clients have no history| Start narrow (section 6); use thin/small history as a test case |
+| 3 | **"I don't know" is always safe**<br/>*Brief: "An AI system that confidently invents something is therefore substantially worse than one that says it doesn't know."* | But too many abstentions could lead to auditors going back to Horizontal AI approach (like ChatGPT)<sup>[[1]](ref-1)</sup> | Say "I don't know" only with a named reason (no data, quote not in source, unreadable scan). Otherwise show what *is* known and flag the gap, e.g. "CA-12 open in records; evidence data doesn't mention it". |
+| 4 | **One design fits all audits and schemes**<br/>*Brief: "Help an auditor arrive at an audit knowing what deserves their attention and why."* | Auditor types, audit types, terms and versions differ<sup>[[2]](ref-2)</sup>; some clients have no history| Start narrow (section 6); use thin/small history as a test case |
 
 
 ---
@@ -110,7 +110,7 @@ flowchart LR
 | How records are asked | Rules and exact queries | Text-to-SQL: can be silently wrong |
 | How documents are asked | Targeted search driven by the records | "Summarise this client": this is too generic and minor but improtant gaps might go unnoticed |
 
-**Later:** clause tagging and entity matching for messy legacy data, a knowledge graph with GraphRAG for multi-hop/follow-up questions, cross-scheme term mapping<sup>[[2]](#ref-2)</sup>.
+**Later:** clause tagging and entity matching for messy legacy data, a knowledge graph with GraphRAG for multi-hop/follow-up questions, cross-scheme term mapping<sup>[[2]](ref-2)</sup>.
 
 ## 6. Smallest useful experiment
 
@@ -127,7 +127,7 @@ flowchart TB
 
 ### The slice
 
-> **For one ISO 9001 surveillance audit, produce a one-page attention brief:** open and repeating issues from the records, what submitted documents say about them, where the two disagree, and what could not be checked. Every item has a source and a label: **Fact · Extracted · Suggestion · Conflict · Missing**.
+> **For one ISO 9001 surveillance audit, produce a one-page attention brief:** open and repeating issues from the records, what submitted documents say about them, where the two disagree, and what could not be checked. Every item has a source and a label: **Fact · Extracted · Suggestion · Conflict · Missing · Check Source**.
 
 | ✅ In scope | ❌ Out of scope |
 | --- | --- |

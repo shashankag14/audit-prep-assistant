@@ -21,7 +21,7 @@ tenants. A client's certificate is looked up by its number.
 
 ## Planted issues in the records
 
-Numbers match the planted-issue table in the prototype plan.
+Numbers match the [planted-issue table in doc 05](../docs/05-experiment-and-evaluation.md#planted-issues-in-the-synthetic-gold-set).
 
 | # | Where | What | Expected |
 | --- | --- | --- | --- |

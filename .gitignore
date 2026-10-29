@@ -220,7 +220,10 @@ __marimo__/
 .streamlit/secrets.toml
 
 # Generated briefs
-out/
+out/*
 misc/
 plan/
 CLAUDE.md
+
+!out/brief_qwen2.5-7b.html
+!out/brief_qwen2.5-7b.provenance.json

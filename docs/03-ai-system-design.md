@@ -52,7 +52,7 @@ Every claim, whatever its source, has the same shape: **thing · id · field · 
 | Data loader | Fetches records, documents and external data for one audit and scoped to one client | Code | Scoping happens first so no other client's data can reach the LLM or accessed by the Auditor |
 | Rules | Answers fixed questions from records | Code | Exact and cheap |
 | OCR | Turns image scans into text, with a confidence per text scanned | Traditional ML for OCR | Some evidence exists only as images. If low confidence → attached to **'Missing'** label in the brief |
-| Search index | Finds passages in this client's documents for each question based on a hand crafted list of questions | Embeddings with Hybrid retrieval (vector search + keyword) | Gives good recall by extracting everything relevant and narrows down what the LLM reads |
+| Search index | Finds passages in this client's documents for each question based on a hand crafted list of questions | Embeddings with Hybrid retrieval (vector search + keyword) (prototype with basic keyword search only) | Gives good recall by extracting everything relevant and narrows down what the LLM reads |
 | Extraction | Reads the retrieved passages and returns claims in the fixed shape, with quote and page | LLM with structured output | The only step in prototype that needs language understanding |
 | External lookup | Queries a short list of trusted public sources using some filters (eg. client name) | Code (API calls) + entity matching | Sometimes risks only show up outside the client's own data |
 | Citation check | Is the quote really on the cited page? | Code (fuzzy string match) | Catches quotes 'invented' by AI. On failure → attached to **'Missing'** label in the brief |
@@ -89,7 +89,7 @@ Note: the field names above are fixed. We provide a list of allowed fields which
 5. **Templates and not generated text:** All brief wording comes from templates. The only LLM written text is an extracted claim, always shown next to its exact quote.
 6. **External data is evidence, never a 'Fact':** It carries its source and the date it was checked. Can't rely on external data to keep it as a **'Fact'**
 7. **When unsure, say so:** Anything unverifiable is attached to **'Missing'** label with its reason. The brief can be incomplete but shouldnt be confidently wrong.
-8. **Model-agnostic:** LLM sits behind one interface. The prototype replays saved responses, so it runs offline and tests are repeatable.
+8. **Model-agnostic:** LLM sits behind one interface. The prototype runs a small local model (Qwen2.5 3B or 1.5B, via llama-cpp, no API key) at temperature 0 with a fixed seed. Tests use a fake client, so they run offline and repeatably.
 
 ---
 
@@ -114,8 +114,10 @@ Note: the field names above are fixed. We provide a list of allowed fields which
 | Records | Synthetically designed JSON | Intact database or platform API |
 | Documents | A few PDFs and one scan of an image | Document storage |
 | External | One fake registry file consisting of one entry which disagrees with the records leading to a  **'Conflict'** | Only allow list of trusted sources |
-| LLM | Replayed saved responses (no API key) | Hosted model |
-| Search | Simple keyword search | Hybrid search with indexing based on aprticular client being audited for data privacy and avoids accessing data outside the permissions granted |
+| LLM | Local Qwen2.5 3B / 1.5B via llama-cpp (CPU, no API key); fake client in tests | Hosted model / Bigger model |
+| Search | Simple keyword search | Hybrid search with indexing based on particular client being audited for data privacy and avoids accessing data outside the permissions granted |
 | Verifier | Not built (described) | Can be added if evaluation shows it helps |
-| Output | Static HTML file | Page in the platform with actions (**Dismiss**/**Mark wrong** as described in ![02-product-experience.md](02-product-experience.md)) |
+| Output | Static HTML file | Page in the platform with actions (**Dismiss**/**Mark wrong** as described in [02-product-experience.md](02-product-experience.md)) |
+
+**NOTE: ** More details on how to make the system production ready with enhancements not in the scope of prototype can be found in [06-production-and-ownership.md](06-production-and-ownership.md)
 

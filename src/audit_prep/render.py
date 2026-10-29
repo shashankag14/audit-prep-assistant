@@ -55,7 +55,7 @@ def render_html(brief: Brief, client_dir: Path, run: RunInfo | None = None) -> s
     audit = brief.audit
     header = (
         f"<h1>Audit prep brief: {escape(brief.client_name)}</h1>"
-        f"<p>Certification Body: {escape(brief.scheme)} · Audit type: {escape(str(audit.get('type')))} audit "
+        f"<p>Scheme: {escape(brief.scheme)} · Audit type: {escape(str(audit.get('type')))} audit</p>"
         f"<p>Audit ID: {escape(str(audit.get('id')))} · Audit Date: {escape(str(audit.get('date')))}</p>"
         f"<p>Tenant ID: {escape(brief.tenant_id)}</p>"
     )

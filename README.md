@@ -6,6 +6,8 @@ The rules surface what's already known from structured data, AI extracts what's 
 
 ![snapshot](docs/img/snapshot.png)
 
+The highlighted boxes show the terminology used in the documents in this project.
+
 ## Quickstart
 
 Installation:
@@ -16,13 +18,14 @@ uv sync --extra dev
 Try it out:
 ```bash
 # Brief for an auditee with rich history: generates out/brief.html + provenance.json, fully offline AI models
-uv run audit-prep --client rich-history --out out/brief.html
+uv run audit-prep --client rich-history --model qwen2.5-7b
 
 # Same as above but a scenario when LLM is down: generates out/brief_no_llm.html + provenance.json
-uv run audit-prep --client rich-history --no-llm  --out out/brief_no_llm.html
+uv run audit-prep --client rich-history --no-llm  --out out/brief_no_llm.html --model qwen2.5-7b
 ```
 
-The first LLM run downloads Qwen2.5-3B (GGUF) from Hugging Face. Might take a minute or two extra.
+
+The first LLM run downloads Qwen2.5-7B (GGUF) from Hugging Face. Might take around 5min to download. Switch to `--model qwen2.5-3b` for a trade off in terms of accuracy vs speed.
 
 ## Docs
 
@@ -40,11 +43,13 @@ Order based on the parts in the technical challenge PDF.
 
 - Synthetic data for two certification bodies (tenants) and two clients: structured records, documents, one scan, a mocked external registry, and an ISO 9001 scheme profile.
 - A pipeline (not an agent): rules on records → OCR + keyword search → local LLM extracts claims from documents → citation and cross-source checks → rank and render an HTML **Audit Brief**.
-- Every item carries one of six labels (``Fact``, ``Extracted``, ``Conflict``, ``Missing``). The LLM never picks the label. The documents in `docs/` also explain how we could use two additional labels - `Suggestion` and `Check source`
+- Every item carries one of 4 labels (``Fact``, ``Extracted``, ``Conflict``, ``Missing``). The LLM never picks the label. The documents in `docs/` also explain how we could use two additional labels - `Suggestion` and `Check source`
 
 ## What I'd do in the prototype with some more time
 
-- **Reliable extraction:** small CPU models (1.5B / 3B) and keyword-only search are not reliable → try a bigger model and hybrid search (vector + keyword). The citation check only proves the quote is **on the page**, not that it **supports the claim** → add a verifier so a wrong claim can't reach the brief.
+- **Reliable extraction:** small CPU models (1.5B / 3B) and keyword-only search used in this prototype are not reliable → try a bigger model and hybrid search (vector + keyword) using SQL db. 
+- **Claim Verifier model:** The citation check after LLM generates a claim only proves the quote is **on the page**, not that it **supports the claim** → add a verifier so a wrong claim can't reach the brief. Use a model like Jev or a cross encoder --> pass claim + quote --> if score < threshold --> Mark the item as **Check Source** in the brief.
 - **Entity linking:** the LLM can write the same id differently (`CA12` vs `CA-12`), so the claim skips the cross-source check and can hide a conflict → link every claim to a known entity first, unlinked ones go to **Missing**.
+- **No repeats between Fact and Conflict:** CA-12 shows up twice in the brief: as a **Conflict** (record says open, document says closed) and as a **Fact** (open, 231 days overdue). The Fact trusts the record, but the Conflict says we don't know which source is right → if a Fact uses a value that is in a Conflict, merge it into the Conflict as one item.
 
 For detailed thigns which I feel would be good to have when moving towards production, see [06-production-and-ownership.md](docs/06-production-and-ownership.md).

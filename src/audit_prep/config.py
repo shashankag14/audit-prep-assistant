@@ -15,6 +15,7 @@ CITATION_MIN_RATIO = 0.9
 # Local LLM: GGUF files run with llama-cpp-python. Downloaded from Hugging Face on
 # first use (no account, no key) into the Hugging Face cache. Pick with --model.
 MODELS = {
+    "qwen2.5-7b": ("bartowski/Qwen2.5-7B-Instruct-GGUF", "Qwen2.5-7B-Instruct-Q4_K_M.gguf"),  # ~7 GB
     "qwen2.5-3b": ("Qwen/Qwen2.5-3B-Instruct-GGUF", "qwen2.5-3b-instruct-q4_k_m.gguf"),  # ~2 GB
     "qwen2.5-1.5b": ("Qwen/Qwen2.5-1.5B-Instruct-GGUF", "qwen2.5-1.5b-instruct-q4_k_m.gguf"),  # ~1 GB
 }

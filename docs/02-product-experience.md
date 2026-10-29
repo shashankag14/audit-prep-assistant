@@ -15,21 +15,21 @@ This walkthrough explains what the system does vs what the auditor does through 
 1. Suppose an auditor (say 'Lena') needs to make a visit to an auditee next week.
 2. She logs in to INTACT platform and clicks on 'Audit Prep' tab. She is asked to select an auditee from a list of assigned auditees to her. 
 3. The system generates a 'Audit Brief' (lets call it 'brief' in the document below). This brief is a static HTML like page with options to click on links. And an option to export the brief as PDF.
-2. At the top of the brief, Lena sees 'Needs Attention' section which contains some conflicts.
-    - 2.1. Lena clicks the conflict item --> sees the link to both the source documents where the conflict arose.
-    - 2.2. She clicks on the link and jumps to the page or record using the link to skim over whats there.
-    - 2.3. She makes a note to check about this during the audit (**TODO**: can this also be a part of the product? add a notes/todo service linked to the system?)
-3. Lena then moves on to the next section 'Worth a look'.
-    - 3.1 She checks the sources but needs some more info on it.
-    - 3.2 Lena asks a follow up question in the chat assistant.
-    - 3.3 Chat assistant answers back with citations.
-    - 3.4 Lena feels its not correct (eg. she opens the cited page and the quote doesnt support the answer)
-    - 3.5 She opens the brief again and clicks a buton beside that item as 'Mark wrong' (thought: this single click serves 2 benefits: adds an eval case for the system and also turns the item to some other color so that Lena is aware about it)
-4. Lena then looks at another item in the 'Worth a look' section, and marks it as 'Dismiss' with a reason 'e.g., already checked over the phone call'. This item is then greyed out with the note.
-5. Lena then checks the 'What I could not check' section.
-    - 5.1 A document was missing in the database, so she emails the auditee to send it before the visit.
-    - 5.2 A PDF was unreadable by the system (eg. low OCR condifence), so she adds "check calibration certificate on site" to her notes.
-6. She adjusts her audit plan based on the brief she read.
+4. At the top of the brief, Lena sees 'Needs Attention' section which contains some conflicts.
+    - 4.1. Lena clicks the conflict item --> sees the link to both the source documents where the conflict arose.
+    - 4.2. She clicks on the link and jumps to the page or record using the link to skim over whats there.
+    - 4.3. She makes a note to check about this during the audit (**TODO**: can this also be a part of the product? add a notes/todo service linked to the system?)
+5. Lena then moves on to the next section 'Worth a look'.
+    - 5.1 She checks the sources but needs some more info on it.
+    - 5.2 Lena asks a follow up question in the chat assistant.
+    - 5.3 Chat assistant answers back with citations.
+    - 5.4 Lena feels its not correct (eg. she opens the cited page and the quote doesnt support the answer)
+    - 5.5 She opens the brief again and clicks a buton beside that item as 'Mark wrong' (thought: this single click serves 2 benefits: adds an eval case for the system and also turns the item to some other color so that Lena is aware about it)
+6. Lena then looks at another item in the 'Worth a look' section, and marks it as 'Dismiss' with a reason 'e.g., already checked over the phone call'. This item is then greyed out with the note.
+7. Lena then checks the 'What I could not check' section.
+    - 7.1 A document was missing in the database, so she emails the auditee to send it before the visit.
+    - 7.2 A PDF was unreadable by the system (eg. low OCR condifence), so she adds "check calibration certificate on site" to her notes.
+8. She adjusts her audit plan based on the brief she read.
 
 ---
 
@@ -40,7 +40,7 @@ flowchart LR
     subgraph S["System"]
         A[Load records, documents and external source data<br/>for this audit] --> B[Rules on records</br>i.e. structured data]
         A --> C[Read documents and scans</br>i.e. unstructured data]
-        C --> D[Citation check<br/>+ Record check]
+        C --> D[Citation check<br/>+ Cross-source check]
         B --> E[Rank brief<br/>+ add why lines]
         D --> E
         Q[Chatbot</br>'Ask about this brief']
@@ -112,7 +112,7 @@ flowchart LR
         subgraph WL["Worth a look"]
             direction TB
             W1["🟩 Extracted: supplier evaluation postponed to Q3<br/>· why: matches open CA topic<br/>· source: Mgmt review p.3"]
-            W2["🟧 Check source: evidence p.4 says evaluation done<br/>· why: verifier doubts the quote is about 2026"<br/>· source: XYZ record]
+            W2["🟧 Check source: evidence p.4 says evaluation done<br/>· why: verifier doubts the quote is about 2026<br/>· source: XYZ record"]
             W3["🟨 Suggestion: sample purchasing records (8.4)<br/>· why: repeat finding + postponed evaluation<br/>· [Dismiss] [Mark wrong]"]
         end
         subgraph NS["Not sampled in last 2 audits </br>(based on rules on structured data)"]

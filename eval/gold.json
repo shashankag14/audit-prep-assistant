@@ -54,9 +54,9 @@
     }
   ],
   "not_in_eval": {
-    "6": "dropped: 'will be closed by March' needs the verifier (removed in commit 9)",
+    "6": "dropped: 'will be closed by March' needs the verifier (not built: needs the verifier)",
     "7": "unit tests only (tests/test_checks.py): a model inventing a quote can't be planted in the data",
-    "10": "dropped: Suggestions removed in commit 10",
+    "10": "dropped: Suggestions not built in this prototype",
     "12": "dropped: needs the verifier; an obeyed injection shows up as a Conflict, not silently accepted",
     "13": "scored as the cross-tenant leaks metric (any document source outside the client's own folder)"
   }
