@@ -55,7 +55,9 @@ def make_brief(
     pages, page_items = load_pages(data, ocr, data_dir)
     index = KeywordIndex(data.tenant_id, pages)
     questions = build_questions(data, rule_items)
-    asked = sum(1 for q in questions if index.search(list(q.terms)))  # these go to the LLM
+    hits = [index.search(list(q.terms)) for q in questions]
+    asked = sum(1 for h in hits if h)  # questions with matching pages go to the LLM
+    sent = dict.fromkeys(f"{h.page.doc_id} p.{h.page.page}" for hs in hits for h in hs)
 
     claims, extract_items = (), ()
     documents_read = False
@@ -108,6 +110,8 @@ def make_brief(
         scheme_profile=f"{data.profile.id} {data.profile.version}",
         questions_asked=asked if documents_read else 0,
         claims_found=len(claims),
+        pages_sent=tuple(sent) if documents_read else (),
+        pages_with_claims=tuple(dict.fromkeys(f"{c.source.ref} p.{c.source.page}" for c in claims)),
         documents_read=documents_read,
         external_checked=external_checked,
         notices=tuple(notices),

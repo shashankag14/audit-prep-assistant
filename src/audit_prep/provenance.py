@@ -9,6 +9,8 @@ exactly which values and quotes the brief cited. Also lists what was skipped
 | model            | Qwen/Qwen2.5-3B-Instruct-GGUF/...gguf, or null (LLM not used) |
 | prompt_version   | extract-v2                                 |
 | scheme_profile   | iso9001 2015                               |
+| pages_sent       | pages given to the LLM, e.g. "DOC-CA12-EVID p.2"   |
+| pages_with_claims| pages the LLM's usable claims cite         |
 | inputs           | records.json -> sha256, docs/.../p2.txt -> sha256, registry |
 | notices          | "Documents not read: ..."                  |
 | items            | every brief item with its sources (ref, page, quote) |
@@ -37,6 +39,8 @@ class RunInfo(BaseModel):
     scheme_profile: str  # e.g. "iso9001 2015"
     questions_asked: int = 0  # questions that had matching pages, so went to the LLM
     claims_found: int = 0
+    pages_sent: tuple[str, ...] = ()  # pages given to the LLM, e.g. "DOC-CA12-EVID p.2"
+    pages_with_claims: tuple[str, ...] = ()  # pages the LLM's usable claims cite
     documents_read: bool = True
     external_checked: bool = True
     notices: tuple[str, ...] = ()  # shown as banners at the top of the brief

@@ -1,0 +1,63 @@
+{
+  "clients": [
+    {
+      "tenant": "cb-a",
+      "client": "rich-history",
+      "expected": [
+        {"issue": 1, "what": "CA-12 overdue", "label": "Fact", "rule": "overdue_ca", "text": "CA-12 open", "source": "CA-12"},
+        {"issue": 2, "what": "clause 8.4 repeat finding", "label": "Fact", "rule": "repeat_finding", "text": "8\\.4", "source": "F-2025-02"},
+        {"issue": 3, "what": "CA-12 closed (doc) vs open (record)", "label": "Conflict", "text": "CA-12 status", "source": "DOC-CA12-EVID", "page": "DOC-CA12-EVID p.2"},
+        {"issue": 4, "what": "certificate suspended (registry) vs valid (record)", "label": "Conflict", "text": "QMS-48213 status", "source": "registry"},
+        {"issue": 5, "what": "supplier evaluation postponed", "label": "Extracted", "text": "postpone|Q3 2026|2026-0[7-9]", "source": "DOC-MR-2026", "page": "DOC-MR-2026 p.2"},
+        {"issue": 8, "what": "smudged expiry date on scan", "label": "Missing", "rule": "citation", "text": "unreadable", "source": "SCAN-CERT-2024", "page": "SCAN-CERT-2024 p.1"},
+        {"issue": 9, "what": "internal audit report not submitted", "label": "Missing", "rule": "missing_document", "text": "internal audit report"},
+        {"what": "CA-13 has no due date", "label": "Missing", "rule": "data_quality", "text": "CA-13", "source": "CA-13"},
+        {"what": "7.1.5 and 8.7 not sampled", "label": "Fact", "rule": "not_sampled", "text": "7\\.1\\.5.*8\\.7", "source": "AUD-2025-S1"}
+      ],
+      "correct_claims": [
+        "QMS-48213 expiry date: 2027-12-01",
+        "CA-12 status: closed",
+        "CA-12 closed on: 2026-03-14",
+        "supplier evaluation .*(postpone|Q3 2026|2026-0[7-9])"
+      ]
+    },
+    {
+      "tenant": "cb-a",
+      "client": "thin-history",
+      "expected": [
+        {"issue": 11, "what": "not enough history", "label": "Missing", "rule": "thin_history", "text": "not enough history"},
+        {"what": "internal audit report not submitted", "label": "Missing", "rule": "missing_document", "text": "internal audit report"}
+      ],
+      "correct_claims": [
+        "QMS-51907 status: valid",
+        "QMS-51907 expiry date: 2029-06-14",
+        "certif.*2026-05|no findings",
+        "complaint.*(3|closed)",
+        "internal audit.*(2026-12|december 2026)"
+      ]
+    },
+    {
+      "tenant": "cb-b",
+      "client": "harbor-foods",
+      "expected": [
+        {"what": "not enough history", "label": "Missing", "rule": "thin_history", "text": "not enough history"},
+        {"what": "management review minutes not submitted", "label": "Missing", "rule": "missing_document", "text": "management review"},
+        {"what": "internal audit report not submitted", "label": "Missing", "rule": "missing_document", "text": "internal audit report"}
+      ],
+      "correct_claims": [
+        "QMS-30077 status: valid",
+        "QMS-30077 expiry date: 2027-08-29",
+        "CA-12 status: closed",
+        "CA-12 closed on: 2025-12-01",
+        "supplier evaluation .*(completed|closed)"
+      ]
+    }
+  ],
+  "not_in_eval": {
+    "6": "dropped: 'will be closed by March' needs the verifier (removed in commit 9)",
+    "7": "unit tests only (tests/test_checks.py): a model inventing a quote can't be planted in the data",
+    "10": "dropped: Suggestions removed in commit 10",
+    "12": "dropped: needs the verifier; an obeyed injection shows up as a Conflict, not silently accepted",
+    "13": "scored as the cross-tenant leaks metric (any document source outside the client's own folder)"
+  }
+}
