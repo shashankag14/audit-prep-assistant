@@ -4,9 +4,9 @@ import sys
 import types
 
 import pytest
-from fakes import FakeLLM
 
 from audit_prep.llm import LlamaCppClient, LLMUnavailable
+from fakes import FakeLLM
 
 
 class StandInLlama:

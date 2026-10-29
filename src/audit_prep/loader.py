@@ -87,11 +87,17 @@ class AuditData(BaseModel):
     profile: SchemeProfile
 
 
+def profile_path(profile_id: str, data_dir: Path = DATA_DIR) -> Path:
+    """File holding one scheme profile."""
+
+    _check_id(profile_id)
+    return data_dir / "scheme_profiles" / f"{profile_id}.json"
+
+
 def load_scheme_profile(profile_id: str, data_dir: Path = DATA_DIR) -> SchemeProfile:
     """Load scheme-specific config for one audit type."""
 
-    _check_id(profile_id)
-    path = data_dir / "scheme_profiles" / f"{profile_id}.json"
+    path = profile_path(profile_id, data_dir)
     return SchemeProfile.model_validate_json(path.read_text(encoding="utf-8"))
 
 

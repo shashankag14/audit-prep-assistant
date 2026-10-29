@@ -4,7 +4,6 @@ OCR is faked; the real engine is never run in tests.
 """
 
 import pytest
-from fakes import FakeOcr
 
 from audit_prep.documents import (
     KeywordIndex,
@@ -16,7 +15,7 @@ from audit_prep.documents import (
 )
 from audit_prep.loader import load_audit
 from audit_prep.models import Label, SourceKind
-
+from fakes import FakeOcr
 
 CERT_LINES = [
     OcrLine(text="Certificatenumber:QMS-48213", confidence=0.99, box=(82, 192, 380, 30)),

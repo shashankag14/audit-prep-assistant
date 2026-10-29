@@ -19,16 +19,34 @@ from audit_prep.models import Claim, Source, SourceKind
 REGISTRY_FIELDS = ("status", "expiry_date")  # certificate fields the registry publishes
 
 
+class RegistryUnavailable(RuntimeError):
+    """The registry can't be read (down, missing, broken). The brief says it wasn't checked."""
+
+
+def registry_path(data_dir: Path = DATA_DIR) -> Path:
+    """File standing in for the registry API."""
+
+    return data_dir / "external" / "registry.json"
+
+
 def registry_claims(records: dict[str, Any], data_dir: Path = DATA_DIR) -> tuple[Claim, ...]:
-    """Registry claims about the client's certificate. Empty if it isn't listed."""
+    """Registry claims about the client's certificate. Empty if it isn't listed.
+
+    Raises RegistryUnavailable if the registry can't be read.
+    """
 
     number = (records.get("certificate") or {}).get("number")
     if not number:
         return ()
 
     # The registry is a JSON file, not an API call (for prototype).
-    registry = json.loads((data_dir / "external" / "registry.json").read_text(encoding="utf-8"))
-    entry = next((c for c in registry["certificates"] if c["number"] == number), None)
+    try:
+        registry = json.loads(registry_path(data_dir).read_text(encoding="utf-8"))
+        listed = registry["certificates"]
+    except (OSError, ValueError, KeyError) as e:  # missing file, bad JSON, wrong shape
+        raise RegistryUnavailable(f"certificate registry could not be read: {e}") from e
+
+    entry = next((c for c in listed if c.get("number") == number), None)
     if entry is None:
         return ()
 

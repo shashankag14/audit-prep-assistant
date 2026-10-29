@@ -15,6 +15,7 @@ from pathlib import Path
 
 from audit_prep import __version__
 from audit_prep.models import Item, Source, SourceKind
+from audit_prep.provenance import RunInfo
 from audit_prep.rank import Brief, Section
 
 CROP_MARGIN = 8  # px of scan shown around the cited line
@@ -40,11 +41,16 @@ q { font-style: italic; }
         max-width: 100%; }
 .empty { color: #57606a; }
 footer { margin-top: 2rem; font-size: .8rem; color: #57606a; }
+.notice { background: #fff8c5; border: 1px solid #d4a72c; border-radius: 6px;
+          padding: .5rem .8rem; margin: .5rem 0; font-weight: 600; }
 """
 
 
-def render_html(brief: Brief, client_dir: Path) -> str:
-    """The whole brief as one HTML string. `client_dir` holds the client's docs/ and scans/."""
+def render_html(brief: Brief, client_dir: Path, run: RunInfo | None = None) -> str:
+    """The whole brief as one HTML string. `client_dir` holds the client's docs/ and scans/.
+
+    `run` adds the banners (what was skipped) and says in the footer how documents were read.
+    """
 
     audit = brief.audit
     header = (
@@ -53,10 +59,13 @@ def render_html(brief: Brief, client_dir: Path) -> str:
         f"<p>Audit ID: {escape(str(audit.get('id')))} · Audit Date: {escape(str(audit.get('date')))}</p>"
         f"<p>Tenant ID: {escape(brief.tenant_id)}</p>"
     )
-    sections = "".join(_section(s, client_dir) for s in brief.sections)
-    footer = (
-        f"<footer>audit-prep {escape(__version__)}.</footer>"
-    )
+    notices = "".join(f'<p class="notice">{escape(n)}</p>' for n in (run.notices if run else ()))
+    sections = notices + "".join(_section(s, client_dir) for s in brief.sections)
+
+    read_by = "documents not read by an LLM"
+    if run and run.model_id:
+        read_by = f"documents read by {run.model_id} (prompt {run.prompt_version})"
+    footer = f"<footer>audit-prep {escape(__version__)} · {escape(read_by)}</footer>"
     return (
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
